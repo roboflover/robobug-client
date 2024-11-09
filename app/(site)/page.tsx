@@ -24,10 +24,10 @@ export default function Exhibitions() {
         <div>
             <p>Привет! Мы создаем робото-скульптуры из цивилизации про Галактику Кибернетическую </p>
             
-            <p>Сайт на реконструкции, постараемся в скором времени его развернуть!</p>
+            <p><a href='/print3d' className='underline'>Калькуляция и заказ 3д печати</a></p>
 
             <p><a href='https://vk.com/robojuk' className='underline'>Группа вконтакте</a></p>
-            {/* <TodoList todos={todos}  /> */}
+            <TodoList todos={todos}  />
         </div>
     )
 }
