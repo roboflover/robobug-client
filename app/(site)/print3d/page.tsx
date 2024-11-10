@@ -154,7 +154,7 @@ export default function Print3dPage() {
   };
 
   const calculateSummaAndPrice = (volume: number, quantity: number): number => {
-    const pricePerCm3 = 10;
+    const pricePerCm3 = 5;
 
     let newprice = volume * pricePerCm3;
     if (newprice < 45) {

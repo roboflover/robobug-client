@@ -9,9 +9,9 @@ const withAuth = (WrappedComponent: React.ComponentType, requiredRole: string) =
 
     useEffect(() => {
       const user = JSON.parse(localStorage.getItem('user') || '{}');
-
+      console.log(user)
       if (!user || user.role !== requiredRole) {
-        router.push('/login');
+        //router.push('/login');
       }
     }, [router]); // Добавление router в массив зависимостей
 

@@ -6,7 +6,7 @@ const Admin = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/admin/dashboard');
+    // router.push('/admin/dashboard');
   }, [router]);
 
   return (
