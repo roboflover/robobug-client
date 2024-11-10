@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "typeRoots": ["@yandex/ymaps3-types"],
     "plugins": [
       {
         "name": "next"

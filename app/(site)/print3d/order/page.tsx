@@ -154,11 +154,11 @@ const Order = () => {
 
   const handleGeocode = async (region: string) => {
     try {
-      const response = await axios.get('/api/geocode', { params: { region } });
+      // const response = await axios.get('/api/geocode', { params: { region } });
       const obj = {
-        lat: response.data.lat,
-        lon: response.data.lon,
-      };
+        lat: "56.3269",
+        lon: "44.0059",
+      }
       setRegionCoord(obj);
     } catch (err) {
       console.error('Произошла ошибка при геокодировании', err);
@@ -175,7 +175,7 @@ const Order = () => {
   };
 
   const handleDeliveryPointClick = (point: DeliveryPoint) => {
-    const address = point.code; // `${point.code}, ${point.location.address}`;
+    const address = `${point.code},  ${point.location.address}`; // `${point.code}, ${point.location.address}`;
     setSelectedDeliveryPoint(address);
     updateAdress(`${point.code}, ${point.location.address}`, setCurrentOrder);
     setIsModalVisible(false);
@@ -277,7 +277,7 @@ const Order = () => {
                   </label>
               </div>
                 <p className="mb-5 text-sm text-muted-foreground text-center mt-2">
-                  По адресу: Московское шоссе, 25к1В
+                  По адресу: Санкт-Петербург, Московское шоссе, 25к1В
                 </p>
 
               <div className="items-top flex space-x-2">
