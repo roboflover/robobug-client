@@ -364,7 +364,7 @@ const Order = () => {
 };
 
 const calculateSummaAndPrice = (volume: number, quantity: number): number => {
-  const pricePerCm3 = 20; // Цена за кубический сантиметр
+  const pricePerCm3 = 5; // Цена за кубический сантиметр
   let newprice = volume * pricePerCm3;
   if (newprice < 45) {
     newprice = 45;
