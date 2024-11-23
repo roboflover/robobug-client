@@ -1,10 +1,11 @@
-'use client';
+'use client'
 
 import { useEffect, useRef, useState } from 'react';
 import p5 from 'p5';
 
 const GraffitiWall = () => {
   const sketchRef = useRef<HTMLDivElement | null>(null);
+  const indicatorRef = useRef<HTMLDivElement | null>(null);
   const brushColorRef = useRef('#000000');
   const brushSizeRef = useRef(5);
 
@@ -27,7 +28,7 @@ const GraffitiWall = () => {
   };
 
   useEffect(() => {
-    const sketch = (p: p5) => {
+    const sketch = new p5((p) => {
       let painting = false;
 
       const startPainting = () => {
@@ -46,6 +47,7 @@ const GraffitiWall = () => {
 
           p.createCanvas(width, height).parent(sketchRef.current);
           p.background(255);
+          p.noCursor();
         }
       };
 
@@ -54,6 +56,13 @@ const GraffitiWall = () => {
           p.stroke(p.color(brushColorRef.current));
           p.strokeWeight(brushSizeRef.current);
           p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+        }
+      };
+
+      p.mouseMoved = () => {
+        if (isMouseInsideCanvas() && indicatorRef.current) {
+          indicatorRef.current.style.left = `${p.mouseX}px`;
+          indicatorRef.current.style.top = `${p.mouseY}px`;
         }
       };
 
@@ -87,19 +96,10 @@ const GraffitiWall = () => {
         stopPainting();
         return false;
       };
-
-      p.touchMoved = () => {
-        if (painting && isMouseInsideCanvas()) {
-          p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
-          return false;
-        }
-      };
-    };
-
-    const p5Instance = new p5(sketch);
+    });
 
     return () => {
-      p5Instance.remove();
+      sketch.remove();
     };
   }, []);
 
@@ -173,11 +173,24 @@ const GraffitiWall = () => {
         />
         <span>{brushSize}</span>
       </div>
-      <div ref={sketchRef} className="w-full h-full"></div>
+      <div ref={sketchRef} className="w-full h-full" style={{ position: 'relative' }}>
+        <div
+          ref={indicatorRef}
+          className="brush-indicator"
+          style={{
+            position: 'absolute',
+            width: `${brushSize}px`,
+            height: `${brushSize}px`,
+            borderRadius: '50%',
+            backgroundColor: `rgba(${brushColor.r}, ${brushColor.g}, ${brushColor.b}, 0.5)`,
+            pointerEvents: 'none',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 1000,
+          }}
+        />
+      </div>
     </div>
   );
-  
 };
 
 export default GraffitiWall;
-
