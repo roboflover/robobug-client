@@ -23,6 +23,17 @@ html, body, #root, .canvas-container {
   padding: 0;
 }
 
+canvas {
+  position: relative;
+  z-index: 0;
+}
+
+.menu {
+  position: relative;
+  z-index: 2;
+}
+
+
 @keyframes blink {
   0%, 100% {
     border-color: transparent;

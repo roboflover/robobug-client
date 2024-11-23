@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -9,17 +8,22 @@ const GraffitiWall = () => {
   const brushColorRef = useRef('#000000');
   const brushSizeRef = useRef(5);
 
-  const [brushColor, setBrushColor] = useState('#000000');
+  const [brushColor, setBrushColor] = useState({ r: 0, g: 0, b: 0 });
   const [brushSize, setBrushSize] = useState(5);
 
-  const handleChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setBrushColor(event.target.value);
-    brushColorRef.current = event.target.value;
+  const updateBrushColor = (color: { r: number; g: number; b: number }) => {
+    setBrushColor(color);
+    brushColorRef.current = `rgb(${color.r}, ${color.g}, ${color.b})`;
   };
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setBrushSize(Number(event.target.value));
     brushSizeRef.current = Number(event.target.value);
+  };
+
+  const handleChangeRGB = (channel: 'r' | 'g' | 'b') => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.min(255, Math.max(0, Number(event.target.value)));
+    updateBrushColor({ ...brushColor, [channel]: value });
   };
 
   useEffect(() => {
@@ -37,8 +41,7 @@ const GraffitiWall = () => {
       p.setup = () => {
         if (sketchRef.current) {
           const container = sketchRef.current.parentNode as HTMLElement;
-          const style = getComputedStyle(container);
-          const width = container.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+          const width = Math.min(window.innerWidth, container.clientWidth);
           const height = width / 2;
 
           p.createCanvas(width, height).parent(sketchRef.current);
@@ -54,8 +57,19 @@ const GraffitiWall = () => {
         }
       };
 
+      const isMouseInsideCanvas = () => {
+        return (
+          p.mouseX >= 0 &&
+          p.mouseX <= p.width &&
+          p.mouseY >= 0 &&
+          p.mouseY <= p.height
+        );
+      };
+
       p.mousePressed = () => {
-        startPainting();
+        if (isMouseInsideCanvas()) {
+          startPainting();
+        }
       };
 
       p.mouseReleased = () => {
@@ -63,8 +77,10 @@ const GraffitiWall = () => {
       };
 
       p.touchStarted = () => {
-        startPainting();
-        return false; // предотвращает прокручивание страницы при рисовании
+        if (isMouseInsideCanvas()) {
+          startPainting();
+          return false;
+        }
       };
 
       p.touchEnded = () => {
@@ -73,10 +89,10 @@ const GraffitiWall = () => {
       };
 
       p.touchMoved = () => {
-        if (painting) {
+        if (painting && isMouseInsideCanvas()) {
           p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+          return false;
         }
-        return false; // предотвращает прокручивание страницы при рисовании
       };
     };
 
@@ -85,25 +101,72 @@ const GraffitiWall = () => {
     return () => {
       p5Instance.remove();
     };
-  }, []); // useEffect вызывается только один раз при монтировании компонента
+  }, []);
 
   return (
     <div>
       <div className="color-selector">
-        <label htmlFor="color">Цвет: </label>
-        <input
-          type="color"
-          id="color"
-          value={brushColor}
-          onChange={handleChangeColor}
-        />
+        <label>Цвет:</label>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column', // Ползунки в столбик
+            alignItems: 'flex-start',
+            gap: '10px',
+          }}
+        >
+          <div
+            style={{
+              width: '50px',
+              height: '50px',
+              backgroundColor: `rgb(${brushColor.r}, ${brushColor.g}, ${brushColor.b})`,
+              border: '1px solid #000',
+            }}
+          ></div>
+          <div>
+            <label htmlFor="red">R:</label>
+            <input
+              type="range"
+              id="red"
+              min="0"
+              max="255"
+              value={brushColor.r}
+              onChange={handleChangeRGB('r')}
+            />
+            <span>{brushColor.r}</span>
+          </div>
+          <div>
+            <label htmlFor="green">G:</label>
+            <input
+              type="range"
+              id="green"
+              min="0"
+              max="255"
+              value={brushColor.g}
+              onChange={handleChangeRGB('g')}
+            />
+            <span>{brushColor.g}</span>
+          </div>
+          <div>
+            <label htmlFor="blue">B:</label>
+            <input
+              type="range"
+              id="blue"
+              min="0"
+              max="255"
+              value={brushColor.b}
+              onChange={handleChangeRGB('b')}
+            />
+            <span>{brushColor.b}</span>
+          </div>
+        </div>
       </div>
-      <div className="size-selector">
+      <div className="size-selector" style={{ marginTop: '20px' }}>
         <label htmlFor="size">Размер кисти: </label>
         <input
           type="range"
           id="size"
-          min="0"
+          min="1"
           max="100"
           value={brushSize}
           onChange={handleChangeSize}
@@ -113,6 +176,8 @@ const GraffitiWall = () => {
       <div ref={sketchRef} className="w-full h-full"></div>
     </div>
   );
+  
 };
 
 export default GraffitiWall;
+
