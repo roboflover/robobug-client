@@ -26,6 +26,14 @@ const GraffitiWall = () => {
     const sketch = (p: p5) => {
       let painting = false;
 
+      const startPainting = () => {
+        painting = true;
+      };
+
+      const stopPainting = () => {
+        painting = false;
+      };
+
       p.setup = () => {
         if (sketchRef.current) {
           const container = sketchRef.current.parentNode as HTMLElement;
@@ -47,11 +55,28 @@ const GraffitiWall = () => {
       };
 
       p.mousePressed = () => {
-        painting = true;
+        startPainting();
       };
 
       p.mouseReleased = () => {
-        painting = false;
+        stopPainting();
+      };
+
+      p.touchStarted = () => {
+        startPainting();
+        return false; // предотвращает прокручивание страницы при рисовании
+      };
+
+      p.touchEnded = () => {
+        stopPainting();
+        return false;
+      };
+
+      p.touchMoved = () => {
+        if (painting) {
+          p.line(p.pmouseX, p.pmouseY, p.mouseX, p.mouseY);
+        }
+        return false; // предотвращает прокручивание страницы при рисовании
       };
     };
 
