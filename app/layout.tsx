@@ -5,11 +5,12 @@ import Script from "next/script";
 // import Head from "next/head";
 import { OrderProvider } from '@/app/context/OrderContext';
 import { AuthProvider } from "./context/AuthContext";
+import { YandexMetricaProvider } from 'next-yandex-metrica';
 
-// export const metadata: Metadata = {
-//   title: 'Робожук сервис 3D печати с доставкой',
-//   description: 'Сервис 3D печати с доставкой',
-// };
+export const metadata: Metadata = {
+  title: 'Робожук сервис 3D печати с доставкой',
+  description: 'Сервис 3D печати с доставкой',
+};
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
 
@@ -17,28 +18,18 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" suppressHydrationWarning={true}>
 
       <body className="font-sans" id="root" suppressHydrationWarning={true} style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
-        {/* <Script id="metrika-counter" strategy="afterInteractive">
-          {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-        
-            ym(97622142, "init", {
-                  defer: true,
-                  clickmap:true,
-                  trackLinks:true,
-                  accurateTrackBounce:true,
-                  webvisor:true
-            });`
-          }
-        </Script> */}
+      <YandexMetricaProvider
+      tagID={97622142}
+      initParameters={{ clickmap: true, trackLinks: true, accurateTrackBounce: true }}
+    >
+
 
         <OrderProvider>
           <AuthProvider>
           {children}
           </AuthProvider>
         </OrderProvider>
+        </YandexMetricaProvider>
       </body>
     </html>
   );
