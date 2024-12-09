@@ -1,4 +1,5 @@
 'use client';
+
 import "./../globals.css";
 import { ThemeProvider } from "next-themes";
 import { Header } from '@/app/(site)/components/header';
@@ -6,6 +7,7 @@ import { Footer } from '@/app/(site)/components/footer';
 import { useState } from "react";
 import { AuthProvider } from "../context/AuthContext";
 import { usePathname } from 'next/navigation';
+import { YandexMetricaProvider } from 'next-yandex-metrica';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,6 +28,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       disableTransitionOnChange
     >
       <AuthProvider>
+        <YandexMetricaProvider
+          tagID={97622142}
+          initParameters={{ clickmap: true, trackLinks: true, accurateTrackBounce: true }}
+        >
         <div className="w-full max-w-5xl mx-auto" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
           {showHeader && <Header toggleMenu={toggleMenu} />}
           <div className="">
@@ -33,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
           {showHeader && <Footer/>}
         </div>
+        </YandexMetricaProvider>
       </AuthProvider>
     </ThemeProvider>
   );
