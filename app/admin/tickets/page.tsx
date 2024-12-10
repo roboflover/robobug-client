@@ -1,8 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { getTickets, createTickets, updateTickets, deleteTickets, Ticket } from '../../lib/ticketsApi';
+import { getTickets, createTickets, updateTickets, deleteTickets } from '../../lib/ticketsApi';
 import TodoList from './components/TodoList';
 import AddTodo from './components/AddTodo';
+import { Ticket } from '@/app/interface/ticket.interface';
 
 const Home: React.FC = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
