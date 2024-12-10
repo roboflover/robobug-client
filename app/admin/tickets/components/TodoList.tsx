@@ -1,5 +1,5 @@
 import React from 'react';
-import { Ticket } from '../../../lib/ticketsApi';
+import { Ticket } from '@/app/interface/ticket.interface';
 import Image from 'next/image';
 
 interface TodoListProps {
