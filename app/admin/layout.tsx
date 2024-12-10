@@ -15,4 +15,5 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     // </ProtectedRoute>
   );
 };
+
 export default Layout;

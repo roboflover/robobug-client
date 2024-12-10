@@ -17,6 +17,9 @@ export const Sidebar = () => {
             <Link href="/admin/orderPrint3d">Заказы на 3д печать</Link>
           </li>
           <li className="p-4 hover:bg-gray-700">
+            <Link href="/admin/tickets">Билеты</Link>
+          </li>
+          <li className="p-4 hover:bg-gray-700">
             {/* <Link href="/admin/exhibitions">Выставки</Link> */}
           </li>
           {/* <li className="p-4 hover:bg-gray-700">

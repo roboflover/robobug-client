@@ -1,35 +1,35 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { getTodos, updateTodo, deleteTodo, Todo } from '../../lib/projectsApi';
+import { getTickets, createTickets, updateTickets, deleteTickets, Ticket } from '../../lib/ticketsApi';
 import TodoList from './components/TodoList';
 import AddTodo from './components/AddTodo';
 
 const Home: React.FC = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
 
   useEffect(() => {
     fetchTodos();
   }, []);
 
   const fetchTodos = async () => {
-    const data = await getTodos();
-    setTodos(data);
+    const data = await getTickets();
+    setTickets(data);
   };
 
   const handleDeleteTodo = async (id: number) => {
-    await deleteTodo(id);
-    setTodos(todos.filter((todo) => todo.id !== id));
+    await deleteTickets(id);
+    setTickets(tickets.filter((ticket) => ticket.id !== id));
   };
 
   return (
     <div className="max-w-lg mx-auto mt-10 p-4 bg-gray-900 text-white shadow-md rounded">
       {/* <h1 className="text-2xl font-bold mb-4">Загрузить изображение</h1>
       <ImageUpload /> */}
-      <h1 className="text-2xl font-bold mb-4">Новости</h1>
+      <h1 className="text-2xl font-bold mb-4">Билеты</h1>
       <AddTodo onTodoAdded={fetchTodos} />
-      <TodoList todos={todos} onDelete={handleDeleteTodo} />
+      <TodoList tickets={tickets} onDelete={handleDeleteTodo} />
     </div>
   );
 };
 
-export default Home
+export default Home;

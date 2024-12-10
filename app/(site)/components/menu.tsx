@@ -48,6 +48,7 @@ export const Menu: React.FC = () => {
     operationMenu = (
       <nav className="flex justify-center space-x-4 py-2 bg-gray-100 dark:bg-gray-900">
         <a href="/" className={getLinkClass('/')}>Новости</a>
+        <a href="/tickets" className={getLinkClass('/')}>Билеты</a>
         <a href="/print3d" className={getLinkClass('/print3d')}>3D печать</a>
         {/* <div className="relative inline-block">
           <select
