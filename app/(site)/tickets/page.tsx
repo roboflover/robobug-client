@@ -26,7 +26,7 @@ export default function Tickets() {
               </h2>
 
           </div>
-          <button onClick={() => { window.location.href = '/tickets/my-tickets' }} className="text-center px-6 py-3 h-10 text-sm font-semibold text-gray-500 border border-gray-500 rounded hover:bg-blue-700 hover:text-white transition duration-300 ease-in-out">
+          <button onClick={() => { window.location.href = '/tickets/my-tickets' }} className="text-center px-6 mb-6 py-3 h-10 text-sm font-semibold text-gray-500 border border-gray-500 rounded hover:bg-blue-700 hover:text-white transition duration-300 ease-in-out">
               Проверить статус заказа
             </button>
             <CatalogList products={products} />
