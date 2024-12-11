@@ -93,9 +93,9 @@ const PaymentButton: React.FC<OrderTicket> = ({ email, ...data }) => {
 
       const confUrl = checkoutData.confirmation.confirmation_url;
       setPaylink(confUrl);
+      window.location.href = confUrl;
 
     } catch (error) {
-      // console.error(error);
       setError('Произошла ошибка при создании платежа.');
     } finally {
       setLoading(false);
