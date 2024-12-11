@@ -24,7 +24,11 @@ export default function Tickets() {
             <h2 className="text-3xl text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-shadow-default">
               Билеты
               </h2>
+
           </div>
+          <button onClick={() => { window.location.href = '/tickets/my-tickets' }} className="text-center px-6 py-3 h-10 text-sm font-semibold text-gray-500 border border-gray-500 rounded hover:bg-blue-700 hover:text-white transition duration-300 ease-in-out">
+              Проверить статус заказа
+            </button>
             <CatalogList products={products} />
             <div className='my-5'></div>
             <p className="text-gray-500  text-center underline"><a href="/userAgreementTickets">Перед заказом ознакомьтесь с пользователським соглашением</a> </p>
