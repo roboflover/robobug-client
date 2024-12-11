@@ -18,7 +18,7 @@ const OrderCompleted = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`/api/print3d/getOrders?email=${email}`);
+        const response = await fetch(`/api/ticket/getTickets?email=${email}`);
         if (!response.ok) {
           throw new Error('Failed to fetch orders');
         }
@@ -37,7 +37,7 @@ const OrderCompleted = () => {
 
     return (
         <div className="p-4">
-          <h2 className="text-2xl font-bold mb-4">Ваши заказы</h2>
+          <h2 className="text-2xl font-bold mb-4">Ваши билеты</h2>
           <div className="mb-4">
             <input
               type="email"

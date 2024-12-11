@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Modal from './Modal';
 import PaymentButton from './PaymentButton';
@@ -10,6 +10,13 @@ interface CatalogListProps {
 }
 
 const CatalogList: React.FC<CatalogListProps> = ({ products }) => {
+
+  const [email, setEmail] = useState('')
+  
+  useEffect(() => {
+    // fetchProducts();
+    // console.log(email)
+  }, [setEmail]);
 
   // const [isOpen, setIsOpen] = useState(false);
   // const [selectedProduct, setSelectedProduct] = useState<{ id: number; title: string, price: number } | null>(null)
@@ -40,16 +47,29 @@ const CatalogList: React.FC<CatalogListProps> = ({ products }) => {
                     <p>No image available</p> // Заглушка, если нет изображения
                   )}
                 </div>
-   
+                  
+
 
         
-              <p className="mt-2 w-full max-w-2xl text-center">{product.description}</p>
+              <p className="mt-2 mx-6 w-full max-w-xl text-center">{product.description}</p>
+              <div className="flex flex-initial items-center mb-2 ">
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value )}
+                  required
+                  className="border p-1 rounded mx-auto"
+                  placeholder="Ваша почта" // Добавляем placeholder
+                />
+              </div>
               <p className="mt-2 text-xl font-semibold italic border border-blue-500 p-2 rounded-lg" style={{ borderColor: 'rgba(59, 130, 246, 0.5)' }}>
                 {product.price}&nbsp;₽
               </p>
+
             </div>
             <div className="flex items-center justify-center mt-4">
-            <PaymentButton {...product} />
+            <PaymentButton {...product} email={email}/>
               {/* <buttononClickproduct{() => handleAddToCart(product.id, product.title, Number(product.price.toFixed(0)))} className="px-4 py-2 text-white bg-blue-500 rounded-xl">
                 Оформитьproduct
               </button> */}
