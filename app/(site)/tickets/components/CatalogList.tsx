@@ -14,17 +14,8 @@ const CatalogList: React.FC<CatalogListProps> = ({ products }) => {
   const [email, setEmail] = useState('')
   
   useEffect(() => {
-    // fetchProducts();
-    // console.log(email)
   }, [setEmail]);
 
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [selectedProduct, setSelectedProduct] = useState<{ id: number; title: string, price: number } | null>(null)
-
-  // const handleAddToCart = (productId: number, productTitle: string, productPrice: number) => {
-  //   setSelectedProduct({ id: productId, title: productTitle, price: productPrice });
-  //   setIsOpen(true);
-  // };
 
   return (
     <div>
