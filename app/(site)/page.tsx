@@ -22,9 +22,9 @@ export default function Exhibitions() {
 
     return (
         <div>
-            <p>Мы создаем робото-скульптуры из цивилизации про Галактику Кибернетическую </p>
+            <p>Добро пожаловать! Сервис 3D печати Робожук</p>
             
-            <p><a href='/print3d' className='underline'>А также печатаем детали на 3д принтере, которые вы можете заказать тут</a></p>
+            <p><a href='/print3d' className='underline'>Печатаем детали на 3д принтере, которые вы можете заказать тут</a></p>
 
             <p><a href='https://vk.com/robojuk' className='underline'>Группа вконтакте</a></p>
             <TodoList todos={todos}  />

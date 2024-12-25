@@ -12,8 +12,8 @@ import { useOrder } from '@/app/context/OrderContext';
 import { STLModel } from './components/STLModel';
 import ColorPicker from './components/ColorPicker';
 import { analyzeModelVolume } from './components/analyzeModelVolume';
-import { v4 as uuidv4 } from 'uuid';
-import { OrderPrint3dProps } from './interface/zakazProps.interface';
+// import { v4 as uuidv4 } from 'uuid';
+// import { OrderPrint3dProps } from './interface/zakazProps.interface';
 import {
   updateVolume, updateFile, updateFileName, updateModelUrl,
   updateDimensions, updateMaterial, updateSumma, updateQuantity, updateColor

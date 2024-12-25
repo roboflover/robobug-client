@@ -1,5 +1,6 @@
 module.exports = {
-    images: {
+  reactStrictMode: false,
+  images: {
       domains: ['storage.yandexcloud.net'],
     },
   };
