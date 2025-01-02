@@ -7,7 +7,7 @@ import { STLLoader } from '@/lib/three/examples/jsm/loaders/STLLoader';
 // Создаем интерфейс пропсов для компонента для большей читабельности
 interface STLModelProps {
   url: string;
-  color: string;
+  color?: string;
   setDimensions: (dimensions: THREE.Vector3) => void;
 }
 
@@ -78,11 +78,11 @@ useEffect(() => {
     }
   }, [geometry, currentDimensions, setDimensions]);
   
-  useFrame(() => {
-    if (ref.current) {
-      ref.current.rotation.z += 0.01;
-    }
-  });
+  // useFrame(() => {
+  //   if (ref.current) {
+  //     ref.current.rotation.z += 0.01;
+  //   }
+  // });
 
   return (
     <>

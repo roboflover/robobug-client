@@ -5,7 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { Header } from '@/app/(site)/components/header';
 import { Footer } from '@/app/(site)/components/footer';
 import { useState } from "react";
-import { AuthProvider } from "../context/AuthContext";
+// import { AuthProvider } from "../context/AuthContext";
 import { usePathname } from 'next/navigation';
 import { YandexMetricaProvider } from 'next-yandex-metrica';
 
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       enableSystem
       disableTransitionOnChange
     >
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <YandexMetricaProvider
           tagID={97622142}
           initParameters={{ clickmap: true, trackLinks: true, accurateTrackBounce: true }}
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {showHeader && <Footer/>}
         </div>
         </YandexMetricaProvider>
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </ThemeProvider>
   );
 }
