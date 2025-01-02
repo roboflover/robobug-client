@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import "./globals.css";
-import { useEffect, useState } from "react";
-import Script from "next/script";
+// import { useEffect, useState } from "react";
+// import Script from "next/script";
 // import Head from "next/head";
-import { OrderProvider } from '@/app/context/OrderContext';
-import { AuthProvider } from "./context/AuthContext";
-import { YandexMetricaProvider } from 'next-yandex-metrica';
+// import { OrderProvider } from '@/app/context/OrderContext';
+// import { AuthProvider } from "./context/AuthContext";
+// import { YandexMetricaProvider } from 'next-yandex-metrica';
 
 // export const metadata: Metadata = {
 //   title: 'Робожук сервис 3D печати с доставкой',
@@ -21,13 +21,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
 
 
-        <OrderProvider>
-          <AuthProvider>
+          {/* <AuthProvider> */}
 
           {children}
 
-          </AuthProvider>
-        </OrderProvider>
+          {/* </AuthProvider> */}
       </body>
     </html>
   );

@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useEffect, useRef, useState } from 'react';
 import p5 from 'p5';
@@ -18,17 +18,14 @@ const GraffitiWall = () => {
   };
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const size = Number(event.target.value);
-    setBrushSize(size);
-    brushSizeRef.current = size;
+    setBrushSize(Number(event.target.value));
+    brushSizeRef.current = Number(event.target.value);
   };
 
-  const handleChangeRGB =
-    (channel: 'r' | 'g' | 'b') =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value = Math.min(255, Math.max(0, Number(event.target.value)));
-      updateBrushColor({ ...brushColor, [channel]: value });
-    };
+  const handleChangeRGB = (channel: 'r' | 'g' | 'b') => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.min(255, Math.max(0, Number(event.target.value)));
+    updateBrushColor({ ...brushColor, [channel]: value });
+  };
 
   useEffect(() => {
     const sketch = new p5((p) => {
@@ -47,6 +44,7 @@ const GraffitiWall = () => {
           const container = sketchRef.current.parentNode as HTMLElement;
           const width = Math.min(window.innerWidth, container.clientWidth);
           const height = width / 2;
+
           p.createCanvas(width, height).parent(sketchRef.current);
           p.background(255);
           p.noCursor();
@@ -62,18 +60,41 @@ const GraffitiWall = () => {
       };
 
       p.mouseMoved = () => {
-        if (indicatorRef.current) {
+        if (isMouseInsideCanvas() && indicatorRef.current) {
           indicatorRef.current.style.left = `${p.mouseX}px`;
           indicatorRef.current.style.top = `${p.mouseY}px`;
         }
       };
 
+      const isMouseInsideCanvas = () => {
+        return (
+          p.mouseX >= 0 &&
+          p.mouseX <= p.width &&
+          p.mouseY >= 0 &&
+          p.mouseY <= p.height
+        );
+      };
+
       p.mousePressed = () => {
-        startPainting();
+        if (isMouseInsideCanvas()) {
+          startPainting();
+        }
       };
 
       p.mouseReleased = () => {
         stopPainting();
+      };
+
+      p.touchStarted = () => {
+        if (isMouseInsideCanvas()) {
+          startPainting();
+          return false;
+        }
+      };
+
+      p.touchEnded = () => {
+        stopPainting();
+        return false;
       };
     });
 
@@ -86,7 +107,14 @@ const GraffitiWall = () => {
     <div>
       <div className="color-selector">
         <label>Цвет:</label>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column', // Ползунки в столбик
+            alignItems: 'flex-start',
+            gap: '10px',
+          }}
+        >
           <div
             style={{
               width: '50px',
@@ -95,24 +123,46 @@ const GraffitiWall = () => {
               border: '1px solid #000',
             }}
           ></div>
-          {['r', 'g', 'b'].map((channel) => (
-            <div key={channel}>
-              <label htmlFor={channel.toUpperCase()}>{channel.toUpperCase()}:</label>
-              <input
-                type="range"
-                id={channel}
-                min="0"
-                max="255"
-                value={brushColor[channel as keyof typeof brushColor]}
-                onChange={handleChangeRGB(channel as 'r' | 'g' | 'b')}
-              />
-              <span>{brushColor[channel as keyof typeof brushColor]}</span>
-            </div>
-          ))}
+          <div>
+            <label htmlFor="red">R:</label>
+            <input
+              type="range"
+              id="red"
+              min="0"
+              max="255"
+              value={brushColor.r}
+              onChange={handleChangeRGB('r')}
+            />
+            <span>{brushColor.r}</span>
+          </div>
+          <div>
+            <label htmlFor="green">G:</label>
+            <input
+              type="range"
+              id="green"
+              min="0"
+              max="255"
+              value={brushColor.g}
+              onChange={handleChangeRGB('g')}
+            />
+            <span>{brushColor.g}</span>
+          </div>
+          <div>
+            <label htmlFor="blue">B:</label>
+            <input
+              type="range"
+              id="blue"
+              min="0"
+              max="255"
+              value={brushColor.b}
+              onChange={handleChangeRGB('b')}
+            />
+            <span>{brushColor.b}</span>
+          </div>
         </div>
       </div>
       <div className="size-selector" style={{ marginTop: '20px' }}>
-        <label htmlFor="size">Размер кисти:</label>
+        <label htmlFor="size">Размер кисти: </label>
         <input
           type="range"
           id="size"
